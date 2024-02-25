@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Component
 public class PlayerService {
@@ -48,5 +49,27 @@ public class PlayerService {
         return playerRepository.findAll().stream()
                 .filter(player -> team.equals(player.getTeam()) && position.equals(player.getPos()))
                 .collect(Collectors.toList());
+    }
+    public void addPlayer(Player player) {
+        playerRepository.save(player);
+    }
+    public void updatePlayer(Player updatedPlayer) {
+        Optional<Player> existingPlayer = playerRepository.findById(updatedPlayer.getId());
+
+        if (existingPlayer.isPresent()) {
+            Player playerToUpdate = existingPlayer.get();
+            playerToUpdate.setName(updatedPlayer.getName());
+            playerToUpdate.setTeam(updatedPlayer.getTeam());
+            playerToUpdate.setPos(updatedPlayer.getPos());
+            playerToUpdate.setNation(updatedPlayer.getNation());
+
+            playerRepository.save(playerToUpdate);
+        } else {
+            // Handle not found scenario, throw exception or handle accordingly.
+        }
+    }
+
+    public void deletePlayer(String playerId) {
+        playerRepository.deleteById(playerId);
     }
 }

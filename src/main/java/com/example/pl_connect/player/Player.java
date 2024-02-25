@@ -6,15 +6,8 @@ import jakarta.persistence.*;
 @Table(name = "player_stats")
 public class Player {
     @Id
-    @SequenceGenerator(
-            name = "player_sequence",
-            sequenceName = "player_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "player_sequence"
-    )
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String id;
     private String name;
     private String nation;
     private String pos;
@@ -30,6 +23,14 @@ public class Player {
     private Double xg;
     private Double xag;
     private String team;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public Player(String name) {
         this.name = name;
