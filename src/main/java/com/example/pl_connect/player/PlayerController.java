@@ -52,9 +52,9 @@ public class PlayerController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    @DeleteMapping("/{playerId}")
-    public ResponseEntity<String> deletePlayer(@PathVariable String playerId) {
-        playerService.deletePlayer(playerId);
+    @DeleteMapping("/{playerName}")
+    public ResponseEntity<String> deletePlayer(@PathVariable String playerName) {
+        playerService.deletePlayer(playerName);
         return new ResponseEntity<>("Player deleted successfully", HttpStatus.OK);
     }
 }

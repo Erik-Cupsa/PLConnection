@@ -1,5 +1,6 @@
 package com.example.pl_connect.player;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -55,7 +56,7 @@ public class PlayerService {
         return player;
     }
     public Player updatePlayer(Player updatedPlayer) {
-        Optional<Player> existingPlayer = playerRepository.findById(updatedPlayer.getId());
+        Optional<Player> existingPlayer = playerRepository.findByName(updatedPlayer.getName());
 
         if (existingPlayer.isPresent()) {
             Player playerToUpdate = existingPlayer.get();
@@ -68,8 +69,8 @@ public class PlayerService {
         }
         return null;
     }
-
-    public void deletePlayer(String playerId) {
-        playerRepository.deleteById(playerId);
+    @Transactional
+    public void deletePlayer(String playerName) {
+        playerRepository.deleteByName(playerName);
     }
 }

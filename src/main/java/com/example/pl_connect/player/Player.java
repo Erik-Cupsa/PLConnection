@@ -6,8 +6,7 @@ import jakarta.persistence.*;
 @Table(name = "player_stats")
 public class Player {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @Column(name = "name", unique = true)
     private String name;
     private String nation;
     private String pos;
@@ -24,13 +23,6 @@ public class Player {
     private Double xag;
     private String team;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public Player(String name) {
         this.name = name;
