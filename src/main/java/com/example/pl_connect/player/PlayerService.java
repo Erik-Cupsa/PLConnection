@@ -50,10 +50,11 @@ public class PlayerService {
                 .filter(player -> team.equals(player.getTeam()) && position.equals(player.getPos()))
                 .collect(Collectors.toList());
     }
-    public void addPlayer(Player player) {
+    public Player addPlayer(Player player) {
         playerRepository.save(player);
+        return player;
     }
-    public void updatePlayer(Player updatedPlayer) {
+    public Player updatePlayer(Player updatedPlayer) {
         Optional<Player> existingPlayer = playerRepository.findById(updatedPlayer.getId());
 
         if (existingPlayer.isPresent()) {
@@ -62,11 +63,10 @@ public class PlayerService {
             playerToUpdate.setTeam(updatedPlayer.getTeam());
             playerToUpdate.setPos(updatedPlayer.getPos());
             playerToUpdate.setNation(updatedPlayer.getNation());
-
             playerRepository.save(playerToUpdate);
-        } else {
-            // Handle not found scenario, throw exception or handle accordingly.
+            return playerToUpdate;
         }
+        return null;
     }
 
     public void deletePlayer(String playerId) {

@@ -1,10 +1,9 @@
 package com.example.pl_connect.player;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,5 +37,24 @@ public class PlayerController {
         } else {
             return playerService.getPlayers();
         }
+    }
+    @PostMapping
+    public ResponseEntity<Player> addPlayer(@RequestBody Player player){
+        Player createdPlayer = playerService.addPlayer(player);
+        return new ResponseEntity<>(createdPlayer, HttpStatus.CREATED);
+    }
+    @PutMapping
+    public ResponseEntity<Player> updatePlayer(@RequestBody Player updatedPlayer) {
+        Player resultPlayer = playerService.updatePlayer(updatedPlayer);
+        if (resultPlayer != null) {
+            return new ResponseEntity<>(resultPlayer, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+    @DeleteMapping("/{playerId}")
+    public ResponseEntity<String> deletePlayer(@PathVariable String playerId) {
+        playerService.deletePlayer(playerId);
+        return new ResponseEntity<>("Player deleted successfully", HttpStatus.OK);
     }
 }
